@@ -1,0 +1,9 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="test">
+	<select id="findUserViaId" parameterType="int" resultType="com.zhuani21.mybatis.model.User">
+		select * from user where user_id = ${id}
+	</select>
+</mapper>

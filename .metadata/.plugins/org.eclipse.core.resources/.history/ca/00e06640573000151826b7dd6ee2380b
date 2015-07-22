@@ -1,0 +1,59 @@
+package com.zhuani21.test.mybatis;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.Test;
+
+import com.zhuani21.mybatis.model.User;
+
+public class MybatisTest {
+
+	@Test
+	public void findUserViaId() throws IOException {
+		String configFilePath = "mybatis-config.xml";
+
+		InputStream configInputStream = Resources
+				.getResourceAsStream(configFilePath);
+
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder()
+				.build(configInputStream);
+
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+
+		viaIdTest(sqlSession);
+		viaNameTest(sqlSession);
+
+		sqlSession.close();
+	}
+
+	private void viaIdTest(SqlSession sqlSession) {
+		User user;
+		user = sqlSession.selectOne("user.findUserViaId", 1l);
+		System.out.println(user.getName());
+	}
+
+	private void viaNameTest(SqlSession sqlSession) {
+		List<User> userList;
+		userList = sqlSession.selectList("user.findUserViaNames", "test");
+		if (null != userList && userList.size() > 0) {
+			for (User user : userList) {
+				System.out.println(user.getName());
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		try {
+			new MybatisTest().findUserViaId();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}

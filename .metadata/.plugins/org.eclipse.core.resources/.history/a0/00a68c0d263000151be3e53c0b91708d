@@ -1,0 +1,16 @@
+package com.zhuani21.mybatis.model;
+
+public class User {
+	/*
+		id	bigint(20)
+		loginName	varchar(255)
+		password	varchar(255)
+		name	varchar(255)
+		gender	varchar(255)
+		phoneNumber	varchar(255)
+		email	varchar(255)
+		description	varchar(255)
+		departmentId	bigint(20)
+	 */
+	private D
+}

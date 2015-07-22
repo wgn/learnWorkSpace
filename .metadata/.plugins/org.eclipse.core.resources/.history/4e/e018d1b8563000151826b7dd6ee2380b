@@ -1,0 +1,52 @@
+package com.zhuani21.test.mybatis;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.Test;
+
+import com.zhuani21.mybatis.model.User;
+
+public class MybatisTest {
+
+	@Test
+	public void findUserViaId() throws IOException{
+		String configFilePath = "mybatis-config.xml";
+		
+		InputStream configInputStream = Resources.getResourceAsStream(configFilePath);
+		
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(configInputStream);
+	
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		User user = null;
+		//user = viaIdTest(sqlSession);
+		user = viaNameTest(sqlSession);
+		
+		System.out.println(user.getName());
+		
+		sqlSession.close();
+	}
+	private User viaNameTest(SqlSession sqlSession) {
+		User user;
+		user = sqlSession.selectOne("user.findUserViaName", "test");
+		return user;
+	}
+	private User viaIdTest(SqlSession sqlSession) {
+		User user;
+		user = sqlSession.selectOne("user.findUserViaId", 1l);
+		return user;
+	}
+	public static void main(String [] args){
+		try {
+			new MybatisTest().findUserViaId();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}

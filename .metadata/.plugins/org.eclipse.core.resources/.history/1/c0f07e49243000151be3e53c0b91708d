@@ -1,0 +1,10 @@
+package com.zhuani21.test.other;
+
+public class LongDataTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

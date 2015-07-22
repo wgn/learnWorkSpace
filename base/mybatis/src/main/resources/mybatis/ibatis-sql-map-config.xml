@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+    "sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<settings useStatementNamespaces="true" maxRequests="256" maxSessions="256" maxTransactions="128"
+		enhancementEnabled="true" lazyLoadingEnabled="true" cacheModelsEnabled="true"/>
+	<sqlMap resource="ibatis/sqlmap_content.xml"></sqlMap>
+	<sqlMap resource="ibatis/sqlmap_user.xml"></sqlMap>
+	<sqlMap resource="ibatis/sqlmap_appcontent.xml"></sqlMap>
+	<sqlMap resource="ibatis/sqlmap_appthumbnail.xml"></sqlMap>
+	<sqlMap resource="ibatis/sqlmap_appzone.xml"></sqlMap>
+	<sqlMap resource="ibatis/sqlmap_qcconfig.xml"></sqlMap>
+	<sqlMap resource="ibatis/sqlmap_contentpartner.xml"></sqlMap>
+	<sqlMap resource="ibatis/sqlmap_userhistory.xml"></sqlMap>
+	<sqlMap resource="ibatis/sqlmap_product.xml"></sqlMap>
+	<sqlMap resource="ibatis/sqlmap_rate.xml"></sqlMap>
+	<sqlMap resource="ibatis/sqlmap_uinified_utbanner.xml"></sqlMap>
+</sqlMapConfig>
