@@ -1,0 +1,13 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="codeMapper">
+	
+	<insert id="saveCodeMap" parameterType="com.zhuani21.mybatis.model.Code_Map">
+		<selectKey keyProperty="id" order="BEFORE" resultType="java.lang.String">
+			select uuid()
+		</selectKey>
+		insert into code_map (id,code_type,code,name) values(#{id},#{code_type},#{code},#{name})
+	</insert>
+</mapper>

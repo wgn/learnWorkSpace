@@ -1,0 +1,81 @@
+package com.zhuani21.test.mybatis;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.Test;
+
+import com.zhuani21.mybatis.model.User;
+
+public class MybatisTest {
+
+	@Test
+	public void mybatisDBTest() throws IOException {
+		String configFilePath = "mybatis-config.xml";
+
+		InputStream configInputStream = Resources
+				.getResourceAsStream(configFilePath);
+
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder()
+				.build(configInputStream);
+
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+
+//		viaIdTest(sqlSession);
+		//viaNameTest(sqlSession);
+		//saveUser(sqlSession);
+		updateUser(sqlSession);
+		sqlSession.close();
+	}
+
+	private void updateUser(SqlSession sqlSession) {
+		viaIdTest(sqlSession,12);
+		
+	}
+
+	private void saveUser(SqlSession sqlSession) {
+		User user = new User();
+		user.setDepartmentId(2);
+		user.setDescription("mybatis add user");
+		user.setEmail("wuguinan@vuclip.com");
+		user.setGender("male");
+		user.setLoginName("zuoeye");
+		user.setName("左eYe");
+		user.setPassword("1234");
+		user.setPhoneNumber("15810135202");
+		int updateRecodeCount = sqlSession.insert("user.saveUser", user);
+		sqlSession.commit();
+		System.out.println(user.getId());
+	}
+
+	private User viaIdTest(SqlSession sqlSession,long id) {
+		User user;
+		user = sqlSession.selectOne("user.findUserViaId", id);
+		System.out.println(user.getName());
+		return user;
+	}
+
+	private void viaNameTest(SqlSession sqlSession) {
+		List<User> userList;
+		userList = sqlSession.selectList("user.findUsersViaName", "test");
+		if (null != userList && userList.size() > 0) {
+			for (User user : userList) {
+				System.out.println(user.getName());
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		try {
+			new MybatisTest().mybatisDBTest();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}

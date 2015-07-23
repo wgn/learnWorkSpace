@@ -1,0 +1,5 @@
+package com.zhuani21.mybatis.model;
+
+public class Code_Map {
+
+}

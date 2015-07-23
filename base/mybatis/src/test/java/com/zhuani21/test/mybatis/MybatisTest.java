@@ -15,7 +15,7 @@ import com.zhuani21.mybatis.model.User;
 public class MybatisTest {
 
 	@Test
-	public void findUserViaId() throws IOException {
+	public void mybatisDBTest() throws IOException {
 		String configFilePath = "mybatis-config.xml";
 
 		InputStream configInputStream = Resources
@@ -26,16 +26,47 @@ public class MybatisTest {
 
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 
-		viaIdTest(sqlSession);
-		viaNameTest(sqlSession);
-
+//		viaIdTest(sqlSession);
+		//viaNameTest(sqlSession);
+		//saveUser(sqlSession);
+		//updateUser(sqlSession);
+		deleteUser(sqlSession);
 		sqlSession.close();
 	}
 
-	private void viaIdTest(SqlSession sqlSession) {
+	private void deleteUser(SqlSession sqlSession) {
+		sqlSession.delete("user.deleteUser", 11L);
+		sqlSession.commit();
+		
+	}
+
+	private void updateUser(SqlSession sqlSession) {
+		User user = viaIdTest(sqlSession,12);
+		user.setName("月光旋风");
+		sqlSession.update("user.updateUser", user);
+		sqlSession.commit();
+	}
+
+	private void saveUser(SqlSession sqlSession) {
+		User user = new User();
+		user.setDepartmentId(2);
+		user.setDescription("mybatis add user");
+		user.setEmail("wuguinan@vuclip.com");
+		user.setGender("male");
+		user.setLoginName("zuoeye");
+		user.setName("左eYe");
+		user.setPassword("1234");
+		user.setPhoneNumber("15810135202");
+		int updateRecodeCount = sqlSession.insert("user.saveUser", user);
+		sqlSession.commit();
+		System.out.println(user.getId());
+	}
+
+	private User viaIdTest(SqlSession sqlSession,long id) {
 		User user;
-		user = sqlSession.selectOne("user.findUserViaId", 1l);
+		user = sqlSession.selectOne("user.findUserViaId", id);
 		System.out.println(user.getName());
+		return user;
 	}
 
 	private void viaNameTest(SqlSession sqlSession) {
@@ -50,7 +81,7 @@ public class MybatisTest {
 
 	public static void main(String[] args) {
 		try {
-			new MybatisTest().findUserViaId();
+			new MybatisTest().mybatisDBTest();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
